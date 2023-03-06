@@ -2,13 +2,13 @@ package com.example.workflow.dto;
 
 import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
 
-public class HistoryEventDto<T> {
+public class HistoryEventDto {
     private String className;
-    private T historyEvent;
+    private HistoryEvent historyEvent;
 
     public HistoryEventDto() {}
 
-    public HistoryEventDto(String className, T historyEvent) {
+    public HistoryEventDto(String className, HistoryEvent historyEvent) {
         this.className = className;
         this.historyEvent = historyEvent;
     }
@@ -21,11 +21,11 @@ public class HistoryEventDto<T> {
         this.className = className;
     }
 
-    public T getHistoryEvent() {
+    public HistoryEvent getHistoryEvent() {
         return historyEvent;
     }
 
-    public void setHistoryEvent(T historyEvent) {
+    public void setHistoryEvent(HistoryEvent historyEvent) {
         this.historyEvent = historyEvent;
     }
 }
