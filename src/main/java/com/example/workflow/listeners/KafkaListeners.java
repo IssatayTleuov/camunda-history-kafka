@@ -1,4 +1,4 @@
-package com.example.workflow;
+package com.example.workflow.listeners;
 
 import com.example.workflow.dto.HistoryEventDto;
 import com.fasterxml.jackson.core.JsonProcessingException;

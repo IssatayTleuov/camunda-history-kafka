@@ -16,9 +16,7 @@ import java.util.Map;
 @Component
 public class HistoryEventDeserializer<T extends Serializable> implements Deserializer<HistoryEvent> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper()
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    public static final String VALUE_CLASS_NAME_CONFIG = "value.class.name";
+    private final ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {

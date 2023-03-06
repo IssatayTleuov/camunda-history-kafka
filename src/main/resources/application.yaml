@@ -17,3 +17,6 @@ spring:
                 class: com.example.workflow.deserializer.HistoryEventDeserializer
 server:
   port: 8081
+logging:
+  level:
+    root: info
