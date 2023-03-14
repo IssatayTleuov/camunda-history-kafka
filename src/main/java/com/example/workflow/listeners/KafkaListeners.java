@@ -1,26 +1,29 @@
 package com.example.workflow.listeners;
 
-import com.example.workflow.handler.CamundaHistoryEventHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.workflow.ProcessHistoryEventCommand;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.camunda.bpm.engine.impl.history.handler.DbHistoryEventHandler;
+import org.camunda.bpm.engine.impl.interceptor.*;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Component;
 
-@Component
-@Slf4j
-public class KafkaListeners {
-    private final CamundaHistoryEventHandler eventHandler;
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+import java.util.Collection;
 
-    @Autowired
-    public KafkaListeners(CamundaHistoryEventHandler eventHandler) {
-        this.eventHandler = eventHandler;
-    }
+@Slf4j
+@RequiredArgsConstructor
+@Component
+public class KafkaListeners {
 
     @KafkaListener(topics = "camunda", groupId = "history-camunda")
     void listener(HistoryEvent historyEvent) {
-        eventHandler.handleEvent(historyEvent);
+        DbHistoryEventHandler historyEventHandler = new DbHistoryEventHandler();
+        ProcessHistoryEventCommand command = new ProcessHistoryEventCommand(historyEvent, historyEventHandler);
+        CommandExecutorImpl executor = new CommandExecutorImpl();
+        executor.execute(command);
     }
 }
+
