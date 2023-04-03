@@ -1,6 +1,7 @@
 package com.example.workflow.config;
 
 import com.example.workflow.dto.HistoryEventDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +13,10 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
 
 @Configuration
-public class KafkaConsumerConfig {
+@RequiredArgsConstructor
+public class KafkaConsumerConfig<T> {
 
     private final KafkaProperties kafkaProperties;
-
-    public KafkaConsumerConfig(KafkaProperties kafkaProperties) {
-        this.kafkaProperties = kafkaProperties;
-    }
 
     @Bean
     public ConsumerFactory<String, HistoryEventDto> consumerFactory() {
