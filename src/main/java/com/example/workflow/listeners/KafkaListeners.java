@@ -1,7 +1,6 @@
 package com.example.workflow.listeners;
 
 import com.example.workflow.ProcessHistoryEventCommand;
-import com.example.workflow.dto.HistoryEventDto;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
 import org.camunda.bpm.engine.impl.history.handler.DbHistoryEventHandler;
@@ -12,11 +11,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class KafkaListeners<T> {
+public class KafkaListeners {
 
     @KafkaListener(topics = "#{'${spring.kafka.template.default-topic}'}", groupId = "history-camunda")
-    void listener(HistoryEventDto historyEventDto) {
-        System.out.println(historyEventDto);
+    void listener(HistoryEvent historyEvent) {
+        log.info(historyEvent.toString() + "\n");
     }
 }
 
