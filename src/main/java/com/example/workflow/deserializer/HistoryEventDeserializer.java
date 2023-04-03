@@ -29,10 +29,10 @@ public class HistoryEventDeserializer<T extends Serializable> implements Deseria
     public HistoryEvent deserialize(String s, byte[] bytes) {
         try {
             if (bytes == null){
-                log.info("Null received at deserializing");
+                log.debug("Null received at deserializing");
                 return null;
             }
-            log.info("Deserializing...");
+            log.debug("Deserializing...");
 
             HistoryEventDto historyEventDto = objectMapper
                     .reader()

@@ -1,9 +1,8 @@
-package com.example.workflow;
+package com.example.workflow.command;
 
-import camundajar.impl.sourcecode.Util;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
 import org.camunda.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.camunda.bpm.engine.impl.interceptor.Command;
@@ -12,18 +11,24 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
-@Data
 @Service
+@Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcessHistoryEventCommand implements Command<Object>, Serializable {
     private HistoryEvent historyEvent;
-    private DbHistoryEventHandler historyEventHandler;
+    private DbHistoryEventHandler eventHandler;
 
     @Override
     public Object execute(CommandContext commandContext) {
-        historyEventHandler.handleEvent(historyEvent);
-        return new Object();
+        log.info("Command: " + historyEvent.toString() + "\n");
+        eventHandler.handleEvent(historyEvent);
+        return null;
+    }
+
+    public void execute() {
+        log.info("Command: " + historyEvent.toString() + "\n");
+        eventHandler.handleEvent(historyEvent);
     }
 }
 
